@@ -24,15 +24,15 @@ listening = True
 mic = sr.Microphone()
 rec = sr.Recognizer()
 
-#eye
+#eye takes the color
 clientIp = "10.0.0.158"
 #LED / MY IP
 #ledIp = "192.168.38.74"
 ledIp = "10.0.0.11"
-#hub
+#hub takes all the info
 #hubIp = "192.168.0.57"
 hubIp = "10.0.0.38"
-#hazel
+#hazel is getting string of response for text to speech
 #hazelIp ="192.168.65"
 hazelIp ="10.0.0.168"
 
@@ -53,7 +53,6 @@ rgbList = ["100","0","100"]
 def restart():
     try:
         print("restart")
-        #os.execv(sys.executable,['sudo python3']+sys.argv)
         os.system("sudo python3 Listener.py")
     except:
         print("restart exception caught")
@@ -77,9 +76,6 @@ def interpret(input):
 
     # Necessary to define exactly where the file is on the computer.
     lights_path = str(sys.path[0]) + "/Lights.py"
-
-#    lights_path = "~/listeningSculpture/the_ear_mvp_1/Lights.py"
-
 
     # This loop will need to be changed as the way it is written
     # means the lights for 'work' will always run first if
@@ -149,9 +145,8 @@ def interpret(input):
     # of 'word' to the background process.
     # wait() forces that process to wait for EOF, then
     # close before the next iteration of the loop.
-    #print(f"meg = {keywords}")
+
     for color in keywords:
-          #client.send_message("/color", color)
           client.send_message("/ear/color", color)
           clientHub.send_message("/ear/color", color)
           clientLED.send_message("/ear/color", color)
